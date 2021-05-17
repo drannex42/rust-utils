@@ -6,7 +6,7 @@ Here you can use the LLVM linked "LLD" which will speed up your compile times by
 
 > "LLD is a linker from the LLVM project that is a drop-in replacement for system linkers and runs much faster than them. [..] When you link a large program on a multicore machine, you can expect that LLD runs more than twice as fast as the GNU gold linker. Your mileage may vary, though."
 
-For users on Linux add this to your Cargo.toml:
+For users on Linux add this to your [.cargo/config.toml](https://doc.rust-lang.org/cargo/reference/config.html):
 ```
 [target.x86_64-unknown-linux-gnu]
 rustflags = [
