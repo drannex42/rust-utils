@@ -14,7 +14,7 @@ rustflags = [
 ]
 ```
 
-**Performance:**
+## Performance
 
 This is a link time comparison on a 2-socket 20-core 40-thread Xeon E5-2680 2.80 GHz machine with an SSD drive. We ran gold and lld with or without multi-threading support. To disable multi-threading, we added -no-threads to the command lines.
 | Program | Output size | GNU ld | GNU gold w/o threads | GNU gold w/threads | lld w/o threads | lld w/threads |
@@ -24,3 +24,16 @@ This is a link time comparison on a 2-socket 20-core 40-thread Xeon E5-2680 2.80
 | clang dbg | 1.67 GiB | 104.03s | 34.18s | 23.49s | 14.82s | 5.28s |
 | chromium dbg | 1.14 GiB | 209.05s [1] | 64.70s | 60.82s | 27.60s | 16.70s |
 
+## Potential Errors 
+
+When running cargo build and the following error occurs:
+```
+  = note: collect2: fatal error: cannot find ‘ld’
+          compilation terminated.
+```
+You choose linkers not by overriding the ld command but choosing to run ld.bfd, ld.gold, ld.lld, etc.
+
+It's the bit after the dot in ld.xyz that you specify in -fuse-ld=xyz. So just make sure that /usr/bin/ld.lld points to your linker and should be good. Something like
+
+```ln -s /usr/bin/ld.lld-* /usr/bin/ld.lld```
+[(source)](https://users.rust-lang.org/t/cannot-find-ld-when-using-lld/47420)
